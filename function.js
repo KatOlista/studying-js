@@ -41,3 +41,5 @@ console.log(parseFloat(elewen));// vozvraszczaet desiati4noje
 
 
 
+
+

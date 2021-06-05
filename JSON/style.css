@@ -1,0 +1,21 @@
+body {
+    background-color: pink;
+}
+
+div {
+    height: 100px;
+    width: 400px;
+    margin-top: 30px;
+    background-color: aqua;
+}
+
+lable {
+    font-size: 40px;
+}
+
+input {
+    height: 40px;
+    width: 200px;
+    background-color: aquamarine;
+    font-size: 30px;
+}

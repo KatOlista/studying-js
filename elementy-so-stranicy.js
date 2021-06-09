@@ -21,7 +21,7 @@ heart.forEach(function (item, i, hearts) {
     item.style.backgroundColor = 'yellowgreen';
 });
 
-let div = document.createElement('div');
+let div = document.createElement('div'),
 text = document.createTextNode('Tut byla ja');
 
 div.classList.add('black');

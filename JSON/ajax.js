@@ -1,7 +1,5 @@
-let inputRub = document.querySelector('input.RUB__input'),
-    inputUsd = document.querySelector('input.USD__input');
-
-    console.log(inputUsd);
+let inputRub = document.querySelector('.RUB__input'),
+    inputUsd = document.querySelector('.USD__input');
 
  inputRub.addEventListener('input', () => {
     let request = new XMLHttpRequest();
@@ -9,7 +7,7 @@ let inputRub = document.querySelector('input.RUB__input'),
     //request.open(method, url, async, login, pass); // method get - polu4aem dannye s servera, method post - otpravlaem dannyje na server
     // async - esli stoit false to poka server nie otvetit stranica visit
     // url - put k serveru
-    request.open('GET', 'C:\Users\Ola\Desktop\beonmax\js\1\JSON\server.json');
+    request.open('GET', 'server.json');
     request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     // method setRequestHeader - nastrojki HTTP zaprosov
     //request.send(body); // otkyvajet soedinenie i otpravlajet zapros na server
@@ -35,7 +33,8 @@ let inputRub = document.querySelector('input.RUB__input'),
             inputUsd.value = inputRub.value / data.usd;
             // inputRub.value = inputUsd.value * data.usd;
         } else {
-            inputUsd.value = "$to-to poshlo nie tak";
+            inputUsd.value = "4to-to poshlo nie tak";
+            console.log(request.status, request.readyState);
         }
     });
-} );
+});

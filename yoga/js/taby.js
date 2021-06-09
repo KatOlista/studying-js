@@ -15,7 +15,7 @@ window.addEventListener('DOMContentLoaded', function() {
             tabContent[i].classList.remove('show');
             tabContent[i].classList.add('hide');
         }
-    };
+    }
     hideTabContent(1);
 
     function showTabContent(b) {
@@ -23,7 +23,7 @@ window.addEventListener('DOMContentLoaded', function() {
             tabContent[b].classList.remove('hide');
             tabContent[b].classList.add('show');
         }
-    };
+    }
 
     info.addEventListener('click', function(event) {
         let target = event.target;
@@ -135,8 +135,10 @@ let deadline = '2021-06-21';
             function addZero(num){
                         if(num <= 9) {
                             return '0' + num;
-                        } else return num;
-                    };
+                        } else {
+                            return num;
+                        }
+                    }
 
             hours.textContent = addZero(t.hours);
             minutes.textContent = addZero(t.minutes);
@@ -203,5 +205,97 @@ let deadline = '2021-06-21';
             document.body.style.overflow = 'hidden';
         });
 
+    // Form
+
+    let message = {
+        loading: "Zagruzka",
+        success: "Spasibo my s vami sviazemsa",
+        failure: "4to ot poshlo nie tak"
+    };
+
+    let form = document.querySelector('.main-form'),
+        input = form.getElementsByTagName('input'),
+        statusMessage = document.createElement('div');
+
+        statusMessage.classList.add('status');
+        
+
+        form.addEventListener('submit', function(event) { // sobytie naveshivajem nie na knopku a na formu
+            event.preventDefault(); // otmeniajet povedenie brauzera po umol4aniu
+            form.appendChild(statusMessage);
+
+            let request = new XMLHttpRequest();
+            request.open('POST', 'server.php');
+            //request.setRequestHeader ('Content-Type', 'application/x-www-form-urlencoded'); //oby4nyj format otpravlajemyh dannyh
+            request.setRequestHeader('Content-type', 'application/json; charset=utf-8'); // dla otpravki dannyh v JSON formate
+
+            let formData = new FormData(form);
+
+            let obj = {};
+                formData.forEach(function(value, key) {
+                    obj[key] = value;                
+            });
+            let json = JSON.stringify(obj); // prevrashaem formData v JSON format ( script na4inajetsa so stroki let obj)
+
+            request.send(json);
+
+            request.addEventListener('readystatechange', function() {
+                if (request.readyState < 4) {
+                    statusMessage.innerHTML = message.loading;                  
+                } else if (request.readyState === 4 && request.status == 200) {
+                    statusMessage.innerHTML = message.success;                 
+                } else {
+                    statusMessage.innerHTML = message.failure;                   
+                }
+            });
+
+            for (let i = 0; i < input.length; i++) {
+                input[i].value = '';
+            }
+    });
+
+       
+
+// Kontact form
+
+        let contactForm = document.getElementById('form'),
+            contactInput = contactForm.getElementsByTagName('input');
+
+            console.log(contactForm);
+            console.log(contactInput[0]);
+
+            contactInput[0].name = 'email';
+            contactInput[1].name = 'telefon';
+
+        contactForm.addEventListener('submit', function(event){
+            event.preventDefault();
+
+            console.log('poshlo!!!!!!!!!!!!!!');
+
+            contactForm.appendChild(statusMessage);
+            
+            let request = new XMLHttpRequest();
+            request.open('POST', 'server.php');
+            request.setRequestHeader ('Content-Type', 'application/x-www-form-urlencoded');
+
+            let contactFormData = new FormData(contactForm);
+            request.send(contactFormData);
+
+            request.addEventListener('readystatechange', function(){
+                if(request.readyState < 4) {
+                    statusMessage.innerHTML = message.loading;
+                } else if(request.readyState === 4 && request.status == 200) {
+                    statusMessage.innerHTML = message.success;
+                } else {
+                    statusMessage.innerHTML = message.failure;
+                }
+            });
+
+            for (let i = 0; i < contactInput.length; i++) {
+                contactInput[i].value = '';
+            }
+        
+        });
+   
 });
 

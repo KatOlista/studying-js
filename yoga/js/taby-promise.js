@@ -238,23 +238,36 @@ let deadline = '2021-06-21';
             let json = JSON.stringify(obj); // prevrashaem formData v JSON format ( script na4inajetsa so stroki let obj)
 
             request.send(json);
+            request.onload = function() {
+               
+                let promise = new Promise(function(resolve, reject) {
+                 request.readyState <= 4 ? resolve({}) : reject();
+                });
+  
+                return promise; 
+ 
 
-            request.addEventListener('readystatechange', function() {
-                if (request.readyState < 4) {
-                    statusMessage.innerHTML = message.loading;                  
-                } else if (request.readyState === 4 && request.status == 200) {
-                    statusMessage.innerHTML = message.success;                 
-                } else {
-                    statusMessage.innerHTML = message.failure;                   
-                }
-            });
+                 // if (request.readyState < 4) {
+                 //     statusMessage.innerHTML = message.loading;                  
+                 // } else if (request.readyState === 4 && request.status == 200) {
+                 //     statusMessage.innerHTML = message.success;                 
+                 // } else {
+                 //     statusMessage.innerHTML = message.failure;                   
+                 // }
+             };
 
+            
+            .then(statusMessage.innerHTML = message.loading, console.log('1'))
+            .then(statusMessage.innerHTML = message.success, console.log('2'))
+            .catch(statusMessage.innerHTML = message.failure, console.log('3'))
+
+                       
             for (let i = 0; i < input.length; i++) {
                 input[i].value = '';
             }
     });
 
-       
+      
 
 // Kontact form
 
